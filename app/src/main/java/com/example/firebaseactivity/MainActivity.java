@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         userAdapter.setDialog(new UserAdapter.Dialog() {
             @Override
             public void onClick(int pos) {
-                final  CharSequence[]dialogItem={"Edit","Hapus","Lihat Data"};
+                final  CharSequence[]dialogItem={"Edit","Hapus"};
                 AlertDialog.Builder diaglog=new AlertDialog.Builder(MainActivity.this);
                 diaglog.setItems(dialogItem, new DialogInterface.OnClickListener() {
                     @Override
@@ -60,11 +60,16 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("id",list.get(pos).getId());
                                 intent.putExtra("name",list.get(pos).getName());
                                 intent.putExtra("email",list.get(pos).getEmail());
+                                intent.putExtra("posisi",list.get(pos).getPosisi());
+                                intent.putExtra("gaji",list.get(pos).getGaji());
+                                intent.putExtra("syarat",list.get(pos).getSyarat());
                                 startActivity(intent);
                                 break;
                             case 1:
                                 deleteData(list.get(pos).getId());
                                 break;
+
+
 
                         }
                     }
@@ -97,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
                         list.clear();
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document: task.getResult()){
-                                User user = new User(document.getString("name"),document.getString("email"));
+                                User user = new User(document.getString("name"),document.getString("email"),document.getString("posisi"),
+                                        document.getString("gaji"),document.getString("syarat"));
                                 user.setId(document.getId());
                                 list.add(user);
                             }

@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class EditorActivity extends AppCompatActivity {
 
-    private EditText editName,editEmail;
+    private EditText editName,editEmail,editPosisi,editGaji,editSyarat;
     private Button btnSave;
 
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
@@ -33,16 +33,21 @@ public class EditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-        editName=findViewById(R.id.name);
+        editName=findViewById(R.id.namePeru);
         editEmail=findViewById(R.id.email);
+        editPosisi=findViewById(R.id.posisi);
+        editGaji=findViewById(R.id.gaji);
+        editSyarat=findViewById(R.id.syarat);
         btnSave=findViewById(R.id.btn_save);
 
         proggressDialog=new ProgressDialog(EditorActivity.this);
         proggressDialog.setTitle("Loading");
         proggressDialog.setMessage("Menyimpan...");
         btnSave.setOnClickListener(v->{
-            if(editName.getText().length()>0 &&editEmail.getText().length()>0){
-                saveData(editName.getText().toString(),editEmail.getText().toString());
+            if(editName.getText().length()>0 &&editEmail.getText().length()>0
+            &&editPosisi.getText().length()>0 &&editGaji.getText().length()>0&&editSyarat.getText().length()>0){
+                saveData(editName.getText().toString(),editEmail.getText().toString(),editPosisi.getText().toString(),
+                        editGaji.getText().toString(),editSyarat.getText().toString());
             }else{
                 Toast.makeText(getApplicationContext(), "Silahkan isi semua data!", Toast.LENGTH_SHORT).show();
             }
@@ -52,12 +57,18 @@ public class EditorActivity extends AppCompatActivity {
             id=intent.getStringExtra("id");
             editName.setText(intent.getStringExtra("name"));
             editEmail.setText(intent.getStringExtra("email"));
+            editPosisi.setText(intent.getStringExtra("posisi"));
+            editGaji.setText(intent.getStringExtra("gaji"));
+            editSyarat.setText(intent.getStringExtra("syarat"));
         }
     }
-    private void saveData(String name, String email){
+    private void saveData(String name, String email, String posisi, String gaji, String syarat){
         Map<String,Object>user=new HashMap<>();
         user.put("name",name);
         user.put("email",email);
+        user.put("posisi",posisi);
+        user.put("gaji",gaji);
+        user.put("syarat",syarat);
 
         proggressDialog.show();
         if(id!=null){

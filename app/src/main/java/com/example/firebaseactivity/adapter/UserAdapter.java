@@ -39,8 +39,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.MyViewHolder holder, int position) {
-        holder.name.setText(list.get(position).getName());
+        holder.namePeru.setText(list.get(position).getName());
         holder.email.setText(list.get(position).getEmail());
+        holder.posisi.setText(list.get(position).getPosisi());
+        holder.gaji.setText(list.get(position).getGaji());
+        holder.syarat.setText(list.get(position).getSyarat());
     }
 
     @Override
@@ -48,12 +51,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
         return list.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView name, email;
+        TextView namePeru, email,posisi,gaji,syarat;
 
         public MyViewHolder(View itemView){
             super(itemView);
-            name=itemView.findViewById(R.id.name);
+            namePeru=itemView.findViewById(R.id.namePeru);
             email=itemView.findViewById(R.id.email);
+            posisi=itemView.findViewById(R.id.posisi);
+            gaji=itemView.findViewById(R.id.gaji);
+            syarat=itemView.findViewById(R.id.syarat);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
